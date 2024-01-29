@@ -23,6 +23,13 @@ async function handleGenerateNewShortURL(req, res){
     return res.render('home',{
         //urls: getAllUrls
     });
+    //see once...
+
+    // const html = res.render('home', {
+    //     urls: getAllUrls
+    //   });
+      
+    //   res.redirect('/', html);
 }
 
 async function handleGetAnalytics(req, res){

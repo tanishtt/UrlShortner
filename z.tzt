@@ -1,3 +1,40 @@
 uuid= can be used as session id as it makes big big unique id.
 
 cookie parser to parse the cookie.
+
+//server stateful me server ko memory me store krna pad rha pura(MAP)
+so server pe load aaega, nad also when server gets started it will clear the map, hence all users will be logout., or //ignore:= if confusion hai to:if permanent store kar liya tologin pe new token, then purana wala ka kya.
+
+
+//stateless => jo token denge user ko, usme he payload bhi rhega, jaise name email password in encrypted form.
+apn token ke andar actual data store krenge.
+
+
+
+// HEADER:
+// {
+//   "alg": "HS256",
+//   "typ": "JWT"
+// }
+// PAYLOAD:
+// {
+//   "sub": "1234567890",
+//   "name": "John Doe",
+//   "iat": 1516239022
+// }
+// VERIFY SIGNATURE
+
+// HMACSHA256(
+//   base64UrlEncode(header) + "." +
+//   base64UrlEncode(payload),
+  
+// your-256-bit-secret
+
+// ) secret base64 encoded
+
+
+in stateful
+
+//latency, har request ke query krenge database ke upar jo ki koi server par hai, to 200ms k delay aaega.
+//in database each read and write octs, so har request me agar database me query krne jaoge to mehenga pdega.hence bill bad jaega.
+

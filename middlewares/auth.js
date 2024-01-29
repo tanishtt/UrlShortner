@@ -1,4 +1,4 @@
-const {getUserFromSessionId} = require('../service/auth')
+const {getUser} = require('../service/auth')
 
 
 async function restrictToLoggedInUserOnly(req, res, next){
@@ -8,7 +8,7 @@ async function restrictToLoggedInUserOnly(req, res, next){
     if(!userUID){
         return res.redirect('/login');
     }
-    const user=getUserFromSessionId(userUID);
+    const user=getUser(userUID);
     console.log(user);
     if(!user){ return res.redirect('/login')}
 
@@ -21,7 +21,7 @@ async function restrictToLoggedInUserOnly(req, res, next){
 async function checkAuth(req, res, next){
     const userUID= req.cookies?.uid;
 
-    const user=getUserFromSessionId(userUID);
+    const user=getUser(userUID);
     
     req.user= user;
     next();
