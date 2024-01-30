@@ -9,7 +9,7 @@ const PORT = 8080;
 const getShortURL= require('./routes/url');
 const URL=require('./models/url')
 const userRoute= require('./routes/user');
-const {restrictToLoggedInUserOnly, checkAuth} = require('./middlewares/auth');
+const {checkForAuthentication, restrictTo} = require('./middlewares/auth');
 
 
 const connectToMongoDB= require('./connection');
@@ -25,11 +25,13 @@ app.set('views', path.resolve('./views'))//jitne bhi views files hai na vo ./vie
 app.use(express.urlencoded({extended: false}));//form data support krenge
 app.use(express.json());//json data support krenge
 app.use(cookieParser());
+app.use(checkForAuthentication);
 
 
-app.use('/',checkAuth, staticRoute);
-app.use('/getShortURL', restrictToLoggedInUserOnly,getShortURL);// if logged in then getShortURL will work, this is called inline middleware.
 app.use('/user',userRoute);
+app.use('/getShortURL',restrictTo(['NORMAL']) ,getShortURL);// if logged in then getShortURL will work, this is called inline middleware.
+app.use('/', staticRoute);
+//app.use('/user',userRoute);
 
 app.get('/getShortURL/:shortId',async (req, res)=>{
     const shortId= req.params.shortId;
